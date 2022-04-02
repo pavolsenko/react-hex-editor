@@ -2,17 +2,19 @@ import * as React from 'react';
 import axios from 'axios';
 
 interface IUseFileLoader {
+    data: string | ArrayBuffer | null;
+    file: File | null,
+    isError: boolean;
+    isLoading: boolean;
     loadFromUrl: (url: string) => Promise<void>;
     loadFromFile: (file: File) => Promise<void>;
-    isLoading: boolean;
-    isError: boolean;
     resetError: () => void;
     resetFile: () => void;
-    file: File | null,
 }
 
 export const useFileLoader = (): IUseFileLoader => {
     const [file, setFile] = React.useState<File | null>(null);
+    const [data, setData] = React.useState<string | ArrayBuffer | null>(null);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [isError, setIsError] = React.useState<boolean>(false);
 
@@ -34,6 +36,7 @@ export const useFileLoader = (): IUseFileLoader => {
 
         if (result.data) {
             setFile(result.data);
+            await loadFileData(result.data)
         }
 
         setIsLoading(false);
@@ -41,11 +44,23 @@ export const useFileLoader = (): IUseFileLoader => {
 
     const loadFromFile = async (file: File): Promise<void> => {
         setIsLoading(true);
-
         setFile(file);
-
+        await loadFileData(file);
         setIsLoading(false);
     };
+
+    const loadFileData = async (file: File): Promise<void> => {
+        const reader = new FileReader()
+
+        reader.onabort = () => setIsError(true);
+        reader.onerror = () => setIsError(true);
+        reader.onload = async (event: ProgressEvent<FileReader>): Promise<void> => {
+           if (event.target?.result) {
+               setData(event.target.result);
+           }
+        };
+        reader.readAsArrayBuffer(file);
+    }
 
     const resetError = (): void => {
         setIsError(false);
@@ -56,12 +71,13 @@ export const useFileLoader = (): IUseFileLoader => {
     };
 
     return {
-        loadFromUrl,
-        loadFromFile,
-        isLoading,
+        data,
         isError,
+        isLoading,
+        file,
+        loadFromFile,
+        loadFromUrl,
         resetError,
         resetFile,
-        file,
     };
 };
