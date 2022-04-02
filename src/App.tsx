@@ -1,9 +1,35 @@
 import * as React from 'react';
+import {IntlProvider} from 'react-intl';
 
-import {HexViewer} from './components/HexViewer';
+import {CssBaseline, ThemeProvider} from '@mui/material';
+import 'typeface-roboto';
 
+import {useLocale} from './hooks/useLocale';
+import {Main} from './components/Main';
+import {themeConfig} from './config/themeConfig';
 export const App = () => {
-  return (
-      <HexViewer/>
-  );
+    const {
+        locale,
+        availableLocales,
+        defaultLocale,
+        setLocale,
+        getMessages,
+    } = useLocale();
+
+    return (
+        <IntlProvider
+            messages={getMessages()}
+            locale={locale}
+            defaultLocale={defaultLocale}
+        >
+            <ThemeProvider theme={themeConfig}>
+                <CssBaseline />
+                <Main
+                    availableLocales={availableLocales}
+                    locale={locale}
+                    setLocale={setLocale}
+                />
+            </ThemeProvider>
+        </IntlProvider>
+    );
 };
