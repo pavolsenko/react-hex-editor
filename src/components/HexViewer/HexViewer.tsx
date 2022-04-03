@@ -3,7 +3,7 @@ import {HexSection} from './HexSection';
 import {ByteSection} from './ByteSection';
 
 export interface IHexViewerProps {
-    data: string | ArrayBuffer | null;
+    data: Uint8Array;
     file: File | null;
     resetFile: () => void;
 }
@@ -15,8 +15,8 @@ export const HexViewer: React.FC<IHexViewerProps> = (props: IHexViewerProps) => 
 
     return (
         <>
-            <HexSection/>
-            <ByteSection/>
+            <HexSection data={props.data}/>
+            <ByteSection data={props.data}/>
             {JSON.stringify(props.file)}
         </>
     );

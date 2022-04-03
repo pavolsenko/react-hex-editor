@@ -2,7 +2,8 @@ import * as React from 'react';
 import {IntlProvider} from 'react-intl';
 
 import {CssBaseline, ThemeProvider} from '@mui/material';
-import 'typeface-roboto';
+import '@fontsource/roboto';
+import '@fontsource/press-start-2p';
 
 import {useLocale} from './hooks/useLocale';
 import {Main} from './components/Main';
