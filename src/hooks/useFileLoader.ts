@@ -1,8 +1,9 @@
 import * as React from 'react';
 import axios from 'axios';
+import {convertFileDataToArray} from '../helpers/string';
 
 interface IUseFileLoader {
-    data: string | ArrayBuffer | null;
+    data: Uint8Array;
     file: File | null,
     isError: boolean;
     isLoading: boolean;
@@ -14,7 +15,7 @@ interface IUseFileLoader {
 
 export const useFileLoader = (): IUseFileLoader => {
     const [file, setFile] = React.useState<File | null>(null);
-    const [data, setData] = React.useState<string | ArrayBuffer | null>(null);
+    const [data, setData] = React.useState<Uint8Array>(new Uint8Array([]));
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [isError, setIsError] = React.useState<boolean>(false);
 
@@ -56,7 +57,9 @@ export const useFileLoader = (): IUseFileLoader => {
         reader.onerror = () => setIsError(true);
         reader.onload = async (event: ProgressEvent<FileReader>): Promise<void> => {
            if (event.target?.result) {
-               setData(event.target.result);
+               setData(
+                   convertFileDataToArray(event.target.result)
+               );
            }
         };
         reader.readAsArrayBuffer(file);
