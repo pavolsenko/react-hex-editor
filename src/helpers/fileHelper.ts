@@ -4,7 +4,13 @@ export const convertFileDataToArray = (data: string | ArrayBuffer | null): Uint8
     }
 
     if (typeof data === 'string') {
-        return (new TextEncoder()).encode(data);
+        let arrayBuffer = new ArrayBuffer(data.length);
+        let newUint = new Uint8Array(arrayBuffer);
+        newUint.forEach((value: number, index: number) => {
+            newUint[index] = data.charCodeAt(index);
+        });
+
+        return newUint;
     }
 
     return new Uint8Array(data);
