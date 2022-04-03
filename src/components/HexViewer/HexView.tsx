@@ -1,36 +1,46 @@
 import * as React from 'react';
-import {convertArrayToHexString} from '../../helpers/string';
+
 import {Box, styled} from '@mui/material';
+
+import {convertArrayToHexString} from '../../helpers/hexHelper';
+import {Item} from './Item';
+import {Header} from './Header';
+import {ItemLineNumber} from './ItemLineNumber';
 
 interface IHexSectionProps {
     data: Uint8Array;
 }
 
-const Wrapper = styled(Box)(() => ({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(16, 1fr)',
-}));
-
-const Item = styled(Box)(() => ({
+const ViewerWrapper = styled(Box)(() => ({
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily: '"Courier new"',
-    fontSize: '12px',
+    flexDirection: 'column',
 }));
 
-export const HexSection: React.FC<IHexSectionProps> = (props: IHexSectionProps) => {
+const HexViewContentWrapper = styled(Box)(() => ({
+    display: 'grid',
+    gridTemplateColumns: 'repeat(17, 1fr)',
+}));
+
+export const HexView: React.FC<IHexSectionProps> = (props: IHexSectionProps) => {
     const renderLine = (line: string, lineNumber: number): React.ReactNode => {
         const result: React.ReactNode[] = [];
 
         let lineString = line;
         let byteNumber = 0;
 
+        result.push(
+            <ItemLineNumber
+                key={'line-' + lineNumber.toString()}
+                lineNumber={lineNumber}
+            />
+        );
+
         while (byteNumber < 16) {
             result.push(
-                <Item key={lineNumber.toString() + '-' + byteNumber.toString()}>
-                    {lineString.substring(0, 2).toUpperCase()}
-                </Item>
+                <Item
+                    key={lineNumber.toString() + '-' + byteNumber.toString()}
+                    value={lineString.substring(0, 2).toUpperCase()}
+                />
             );
 
             lineString = lineString.slice(2);
@@ -60,15 +70,16 @@ export const HexSection: React.FC<IHexSectionProps> = (props: IHexSectionProps) 
         }
 
         return (
-            <Wrapper>
+            <HexViewContentWrapper>
                 {result}
-            </Wrapper>
+            </HexViewContentWrapper>
         );
     };
 
     return (
-        <>
+        <ViewerWrapper>
+            <Header/>
             {renderContent()}
-        </>
+        </ViewerWrapper>
     );
 };

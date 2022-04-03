@@ -48,6 +48,20 @@ export const Main: React.FC<IMainProps> = (props: IMainProps) => {
         );
     };
 
+    const renderHexViewer = (): React.ReactNode => {
+        if (!file) {
+            return null;
+        }
+
+        return (
+            <HexViewer
+                data={data}
+                file={file}
+                onFileReset={() => resetFile()}
+            />
+        );
+    };
+
     return (
         <>
             <TopBar
@@ -57,11 +71,7 @@ export const Main: React.FC<IMainProps> = (props: IMainProps) => {
             />
             <ContentWrapper>
                 {renderFileLoader()}
-                <HexViewer
-                    data={data}
-                    file={file}
-                    resetFile={resetFile}
-                />
+                {renderHexViewer()}
             </ContentWrapper>
         </>
     );

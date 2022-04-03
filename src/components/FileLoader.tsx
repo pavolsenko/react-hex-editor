@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {useDropzone} from 'react-dropzone';
 
-import {Button, Container, Paper, styled, TextField, Typography} from '@mui/material';
+import {Box, Button, Container, Paper, styled, TextField, Typography} from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import {Loading} from './Loading';
-import {useDropzone} from 'react-dropzone';
 
 export interface IFileLoaderProps {
     isError: boolean;
@@ -18,7 +19,24 @@ const ContainerWrapper = styled(Container)(({theme}) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    marginTop: theme.spacing(15),
+    marginTop: theme.spacing(10),
+}));
+
+const PaperWrapper = styled(Paper)(({theme}) => ({
+    margin: theme.spacing(4),
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+}));
+
+const DragAndDropBox = styled(Box)(() => ({
+    height: '20vh',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
 }));
 
 export const FileLoader: React.FC<IFileLoaderProps> = (props: IFileLoaderProps) => {
@@ -52,43 +70,51 @@ export const FileLoader: React.FC<IFileLoaderProps> = (props: IFileLoaderProps) 
 
         return (
             <>
-                <Paper>
+                <PaperWrapper>
                     <Typography
                         variant={'h4'}
                         component={'h2'}
                     >
                         <FormattedMessage id={'Load file from an URL'}/>
                     </Typography>
+
                     <TextField
                         label={intl.formatMessage({id: 'Url'})}
                         variant='outlined'
                     />
 
-                    <Button
-                        size={'large'}
-                        variant={'contained'}
-                    >
-                        <FormattedMessage id={'Submit'}/>
-                    </Button>
-                </Paper>
+                    <Box>
+                        <Button
+                            size={'large'}
+                            variant={'contained'}
+                        >
+                            <FormattedMessage id={'Submit'}/>
+                        </Button>
+                    </Box>
+                </PaperWrapper>
 
-                <Paper {...getRootProps()}>
+                <PaperWrapper {...getRootProps()}>
                     <input
                         {...getInputProps()}
                     />
+
                     <Typography
                         variant={'h4'}
                         component={'h2'}
                     >
                         <FormattedMessage id={'Drag and drop a file'}/>
                     </Typography>
-                </Paper>
+
+                    <DragAndDropBox>
+                        <CloudUploadIcon fontSize={'large'}/>
+                    </DragAndDropBox>
+                </PaperWrapper>
             </>
         );
     };
 
     return (
-        <ContainerWrapper>
+        <ContainerWrapper maxWidth={'md'}>
             {renderLoading()}
             {renderContent()}
         </ContainerWrapper>
