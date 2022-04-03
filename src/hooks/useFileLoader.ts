@@ -1,10 +1,11 @@
 import * as React from 'react';
 import axios from 'axios';
-import {convertFileDataToArray} from '../helpers/string';
+
+import {convertFileDataToArray} from '../helpers/fileHelper';
 
 interface IUseFileLoader {
     data: Uint8Array;
-    file: File | null,
+    file?: File,
     isError: boolean;
     isLoading: boolean;
     loadFromUrl: (url: string) => Promise<void>;
@@ -14,7 +15,7 @@ interface IUseFileLoader {
 }
 
 export const useFileLoader = (): IUseFileLoader => {
-    const [file, setFile] = React.useState<File | null>(null);
+    const [file, setFile] = React.useState<File | undefined>();
     const [data, setData] = React.useState<Uint8Array>(new Uint8Array([]));
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [isError, setIsError] = React.useState<boolean>(false);
@@ -28,12 +29,11 @@ export const useFileLoader = (): IUseFileLoader => {
             result = await axios.get(url);
         } catch (error) {
             console.warn(error);
-            resetFile()
+            resetFile();
             setIsError(true);
             setIsLoading(false);
             return;
         }
-
 
         if (result.data) {
             setFile(result.data);
@@ -63,14 +63,15 @@ export const useFileLoader = (): IUseFileLoader => {
            }
         };
         reader.readAsArrayBuffer(file);
-    }
+    };
 
     const resetError = (): void => {
         setIsError(false);
     };
 
     const resetFile = (): void => {
-        setFile(null);
+        setFile(undefined);
+        setData(new Uint8Array([]));
     };
 
     return {
