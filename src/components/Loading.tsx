@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {Box, CircularProgress, Container, styled} from '@mui/material';
+import {Box, CircularProgress, styled} from '@mui/material';
 
-const LoadingWrapper = styled(Container)(({theme}) => ({
+const LoadingWrapper = styled(Box)(({theme}) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: theme.spacing(15),
@@ -11,9 +11,7 @@ const LoadingWrapper = styled(Container)(({theme}) => ({
 export const Loading: React.FC = () => {
     return (
         <LoadingWrapper>
-            <Box>
-                <CircularProgress />
-            </Box>
+            <CircularProgress disableShrink/>
         </LoadingWrapper>
     );
 };

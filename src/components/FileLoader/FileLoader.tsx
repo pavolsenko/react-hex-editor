@@ -1,19 +1,13 @@
 import * as React from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {useDropzone} from 'react-dropzone';
 
-import {Box, Button, Container, Paper, styled, TextField, Typography} from '@mui/material';
+import {Alert, Box, Container, Paper, styled, Typography} from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-import {Loading} from './Loading';
-
-export interface IFileLoaderProps {
-    isError: boolean;
-    isLoading: boolean;
-    resetError: () => void;
-    loadFromUrl: (url: string) => Promise<void>;
-    loadFromFile: (file: File) => Promise<void>;
-}
+import {Loading} from '../Loading';
+import {FileList} from './FileList';
+import {FileInput} from './FileInput';
 
 const ContainerWrapper = styled(Container)(({theme}) => ({
     display: 'flex',
@@ -39,8 +33,15 @@ const DragAndDropBox = styled(Box)(() => ({
     cursor: 'pointer',
 }));
 
+export interface IFileLoaderProps {
+    isError: boolean;
+    isLoading: boolean;
+    resetError: () => void;
+    loadFromUrl: (url: string) => Promise<void>;
+    loadFromFile: (file: File) => Promise<void>;
+}
+
 export const FileLoader: React.FC<IFileLoaderProps> = (props: IFileLoaderProps) => {
-    const intl = useIntl();
     const loadFromFile = props.loadFromFile;
 
     const onDrop = React.useCallback(async (acceptedFiles: File[]): Promise<void> => {
@@ -51,7 +52,7 @@ export const FileLoader: React.FC<IFileLoaderProps> = (props: IFileLoaderProps) 
         await loadFromFile(acceptedFiles[0]);
     }, [loadFromFile]);
 
-    const {getRootProps, getInputProps} = useDropzone({onDrop})
+    const {getRootProps, getInputProps} = useDropzone({onDrop});
 
     const renderLoading = (): React.ReactNode => {
         if (!props.isLoading) {
@@ -60,6 +61,19 @@ export const FileLoader: React.FC<IFileLoaderProps> = (props: IFileLoaderProps) 
 
         return (
             <Loading/>
+        );
+    }
+
+    const renderError = (): React.ReactNode => {
+        if (!props.isError) {
+            return null;
+        }
+
+        return (
+            <Alert severity='error'>
+                <FormattedMessage id={'Sorry, something went wrong'}/>
+            </Alert>
+
         );
     }
 
@@ -78,19 +92,8 @@ export const FileLoader: React.FC<IFileLoaderProps> = (props: IFileLoaderProps) 
                         <FormattedMessage id={'Load file from an URL'}/>
                     </Typography>
 
-                    <TextField
-                        label={intl.formatMessage({id: 'Url'})}
-                        variant='outlined'
-                    />
-
-                    <Box>
-                        <Button
-                            size={'large'}
-                            variant={'contained'}
-                        >
-                            <FormattedMessage id={'Submit'}/>
-                        </Button>
-                    </Box>
+                    <FileInput loadFromUrl={props.loadFromUrl}/>
+                    <FileList loadFromUrl={props.loadFromUrl}/>
                 </PaperWrapper>
 
                 <PaperWrapper {...getRootProps()}>
@@ -116,6 +119,7 @@ export const FileLoader: React.FC<IFileLoaderProps> = (props: IFileLoaderProps) 
     return (
         <ContainerWrapper maxWidth={'md'}>
             {renderLoading()}
+            {renderError()}
             {renderContent()}
         </ContainerWrapper>
     );

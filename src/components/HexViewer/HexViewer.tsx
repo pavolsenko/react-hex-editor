@@ -8,6 +8,8 @@ export interface IHexViewerProps {
     data: Uint8Array;
     file: File | null;
     onFileReset: () => void;
+    isLoading: boolean;
+    isError: boolean;
 }
 
 const HexViewerWrapper = styled(Box)(({theme}) => ({
@@ -23,7 +25,7 @@ const ContentWrapper = styled(Box)(() => ({
 }));
 
 export const HexViewer: React.FC<IHexViewerProps> = (props: IHexViewerProps) => {
-    if (!props.file) {
+    if (!props.file || props.isError || props.isLoading) {
         return null;
     }
 

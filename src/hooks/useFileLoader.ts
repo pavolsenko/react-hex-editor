@@ -36,8 +36,8 @@ export const useFileLoader = (): IUseFileLoader => {
         }
 
         if (result.data) {
-            setFile(result.data);
-            await loadFileData(result.data)
+            setFile(new File([], url.substring(url.lastIndexOf('/') + 1)));
+            setData(convertFileDataToArray(result.data));
         }
 
         setIsLoading(false);
@@ -55,6 +55,9 @@ export const useFileLoader = (): IUseFileLoader => {
 
         reader.onabort = () => setIsError(true);
         reader.onerror = () => setIsError(true);
+        reader.onloadstart = () => setIsLoading(true);
+        reader.onloadend = () => setIsLoading(false);
+
         reader.onload = async (event: ProgressEvent<FileReader>): Promise<void> => {
            if (event.target?.result) {
                setData(

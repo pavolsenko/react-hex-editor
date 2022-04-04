@@ -5,7 +5,7 @@ import {Box, styled} from '@mui/material';
 import {ILocale} from '../config/localeConfig';
 import {useFileLoader} from '../hooks/useFileLoader';
 import {TopBar} from './TopBar';
-import {FileLoader} from './FileLoader';
+import {FileLoader} from './FileLoader/FileLoader';
 import {HexViewer} from './HexViewer/HexViewer';
 
 interface IMainProps {
@@ -56,6 +56,8 @@ export const Main: React.FC<IMainProps> = (props: IMainProps) => {
         return (
             <HexViewer
                 data={data}
+                isError={isError}
+                isLoading={isLoading}
                 file={file}
                 onFileReset={() => resetFile()}
             />
