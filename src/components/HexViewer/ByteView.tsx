@@ -2,11 +2,8 @@ import * as React from 'react';
 
 import {Box, styled} from '@mui/material';
 
+import {ISectionProps} from './interfaces';
 import {Item} from './Item';
-
-interface IByteSectionProps {
-    data: Uint8Array;
-}
 
 const Wrapper = styled(Box)(({theme}) => ({
     display: 'flex',
@@ -31,12 +28,20 @@ const Header = styled(Box)(({theme}) => ({
     justifyContent: 'flex-end',
 }));
 
-export const ByteView: React.FC<IByteSectionProps> = (props: IByteSectionProps) => {
+export const ByteView: React.FC<ISectionProps> = (props: ISectionProps) => {
     const renderData = (): React.ReactNode[] => {
         const result: React.ReactNode[] = [];
+
         props.data.forEach((item: number, index: number) => {
+            const line = Math.floor(index / 16);
+            const column = index % 16;
+
             result.push(
                 <Item
+                    line={line}
+                    column={column}
+                    isSelected={props.selectedByte?.line === line && props.selectedByte.column === column}
+                    onClick={props.onSelectedByteChange}
                     key={index.toString()}
                     value={String.fromCharCode(item)}
                 />

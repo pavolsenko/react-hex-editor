@@ -3,8 +3,8 @@ import * as React from 'react';
 import {Box, styled} from '@mui/material';
 
 import {generateArrayOfHexNumbers} from '../../helpers/hexHelper';
-import {Item} from './Item';
 import {ItemLineNumber} from './ItemLineNumber';
+import {HeaderItem} from './HeaderItem';
 
 const Wrapper = styled(Box)(({theme}) => ({
     display: 'grid',
@@ -14,7 +14,7 @@ const Wrapper = styled(Box)(({theme}) => ({
     height: '36px',
 }));
 
-export const Header: React.FC = () => {
+export const Header: React.FC = React.memo(() => {
     const numbers = generateArrayOfHexNumbers();
 
     return (
@@ -22,7 +22,7 @@ export const Header: React.FC = () => {
             <ItemLineNumber/>
             {numbers.map((hexNumber: string): React.ReactNode => {
                 return (
-                    <Item
+                    <HeaderItem
                         key={'header-' + hexNumber}
                         value={hexNumber}
                     />
@@ -30,4 +30,4 @@ export const Header: React.FC = () => {
             })}
         </Wrapper>
     );
-};
+});

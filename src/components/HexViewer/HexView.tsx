@@ -6,10 +6,7 @@ import {convertArrayToHexString} from '../../helpers/hexHelper';
 import {Item} from './Item';
 import {Header} from './Header';
 import {ItemLineNumber} from './ItemLineNumber';
-
-interface IHexSectionProps {
-    data: Uint8Array;
-}
+import {ISectionProps} from './interfaces';
 
 const ViewerWrapper = styled(Box)(() => ({
     display: 'flex',
@@ -21,7 +18,7 @@ const HexViewContentWrapper = styled(Box)(() => ({
     gridTemplateColumns: 'repeat(17, 1fr)',
 }));
 
-export const HexView: React.FC<IHexSectionProps> = (props: IHexSectionProps) => {
+export const HexView: React.FC<ISectionProps> = (props: ISectionProps) => {
     const renderLine = (line: string, lineNumber: number): React.ReactNode => {
         const result: React.ReactNode[] = [];
 
@@ -36,8 +33,13 @@ export const HexView: React.FC<IHexSectionProps> = (props: IHexSectionProps) => 
         );
 
         while (byteNumber < 16) {
+
             result.push(
                 <Item
+                    line={lineNumber}
+                    column={byteNumber}
+                    isSelected={props.selectedByte?.line === lineNumber && props.selectedByte.column === byteNumber}
+                    onClick={props.onSelectedByteChange}
                     key={lineNumber.toString() + '-' + byteNumber.toString()}
                     value={lineString.substring(0, 2).toUpperCase()}
                 />

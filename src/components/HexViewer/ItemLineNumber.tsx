@@ -20,7 +20,7 @@ interface IItemLineNumberProps {
     lineNumber?: number;
 }
 
-export const ItemLineNumber: React.FC<IItemLineNumberProps> = (props: IItemLineNumberProps) => {
+export const ItemLineNumber: React.FC<IItemLineNumberProps> = React.memo((props: IItemLineNumberProps) => {
     const lineNumber = props.lineNumber !== undefined ? getLineNumberHex(props.lineNumber) : '';
 
     return (
@@ -28,4 +28,4 @@ export const ItemLineNumber: React.FC<IItemLineNumberProps> = (props: IItemLineN
             {lineNumber}
         </ItemLineNumberWrapper>
     );
-};
+});

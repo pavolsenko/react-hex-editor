@@ -21,6 +21,10 @@ export const useFileLoader = (): IUseFileLoader => {
     const [isError, setIsError] = React.useState<boolean>(false);
 
     const loadFromUrl = async (url: string): Promise<void> => {
+        if (!url) {
+            return;
+        }
+
         resetError();
         setIsLoading(true);
 

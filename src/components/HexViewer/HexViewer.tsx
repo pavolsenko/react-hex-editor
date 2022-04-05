@@ -3,6 +3,7 @@ import {HexView} from './HexView';
 import {ByteView} from './ByteView';
 import {Box, styled} from '@mui/material';
 import {ViewerHeader} from './ViewerHeader';
+import {ISelectedByte} from './interfaces';
 
 export interface IHexViewerProps {
     data: Uint8Array;
@@ -25,6 +26,12 @@ const ContentWrapper = styled(Box)(() => ({
 }));
 
 export const HexViewer: React.FC<IHexViewerProps> = (props: IHexViewerProps) => {
+    const [selectedByte, setSelectedByte] = React.useState<ISelectedByte | undefined>();
+
+    const onSelectedByteChange = React.useCallback((selectedByte: ISelectedByte) => {
+        setSelectedByte(selectedByte);
+    }, []);
+
     if (!props.file || props.isError || props.isLoading) {
         return null;
     }
@@ -36,8 +43,16 @@ export const HexViewer: React.FC<IHexViewerProps> = (props: IHexViewerProps) => 
                 onCloseClick={() => props.onFileReset()}
             />
             <ContentWrapper>
-                <HexView data={props.data}/>
-                <ByteView data={props.data}/>
+                <HexView
+                    data={props.data}
+                    selectedByte={selectedByte}
+                    onSelectedByteChange={onSelectedByteChange}
+                />
+                <ByteView
+                    data={props.data}
+                    selectedByte={selectedByte}
+                    onSelectedByteChange={onSelectedByteChange}
+                />
             </ContentWrapper>
         </HexViewerWrapper>
     );
