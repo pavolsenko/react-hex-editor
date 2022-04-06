@@ -4,9 +4,9 @@ export const convertArrayToHexString = (data: Uint8Array): string => {
     }).join('');
 };
 
-export const generateArrayOfHexNumbers = (): string[] => {
+export const getArrayOfHexNumbers = (length: number = 16): string[] => {
     const result: string[] = [];
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < length; i++) {
         result.push(
             i.toString(16).toUpperCase(),
         );
@@ -15,10 +15,11 @@ export const generateArrayOfHexNumbers = (): string[] => {
     return result;
 };
 
-export const getLineNumberHex = (lineNumber: number): string => {
+export const getLineNumberHex = (lineNumber: number, length: number = 16): string => {
     let line = lineNumber.toString(16).toUpperCase() + '0';
+    const lineLength = line.length;
 
-    for (let i = 0; i <= 16 - line.length; i++) {
+    for (let i = 0; i <= length - lineLength; i++) {
         line = '0' + line;
     }
 

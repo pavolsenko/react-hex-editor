@@ -1,30 +1,30 @@
 {
-  "extends": [
-    "react-app",
-    "prettier"
-  ],
-  "rules": {
-    "react/jsx-max-props-per-line": [
-      2,
-      {
-        "maximum": 1,
-        "when": "always"
-      }
+    "extends": [
+        "react-app",
+        "prettier"
     ],
-    "indent": [
-      "error",
-      4
+    "rules": {
+        "react/jsx-max-props-per-line": [
+            2,
+            {
+                "maximum": 1,
+                "when": "always"
+            }
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ]
+    },
+    "plugins": [
+        "prettier"
     ],
-    "comma-dangle": [
-      "error",
-      "always-multiline"
+    "ignorePatterns": [
+        "**/*.png",
+        "**/*.json"
     ]
-  },
-  "plugins": [
-    "prettier"
-  ],
-  "ignorePatterns": [
-    "**/*.png",
-    "**/*.json"
-  ]
 }

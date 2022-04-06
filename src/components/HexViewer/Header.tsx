@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {Box, styled} from '@mui/material';
 
-import {generateArrayOfHexNumbers} from '../../helpers/hexHelper';
+import {getArrayOfHexNumbers} from '../../helpers/hexHelper';
 import {ItemLineNumber} from './ItemLineNumber';
 import {HeaderItem} from './HeaderItem';
 
@@ -15,7 +15,7 @@ const Wrapper = styled(Box)(({theme}) => ({
 }));
 
 export const Header: React.FC = React.memo(() => {
-    const numbers = generateArrayOfHexNumbers();
+    const numbers = getArrayOfHexNumbers();
 
     return (
         <Wrapper>

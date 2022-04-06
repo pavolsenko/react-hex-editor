@@ -33,7 +33,6 @@ export const HexView: React.FC<ISectionProps> = (props: ISectionProps) => {
         );
 
         while (byteNumber < 16) {
-
             result.push(
                 <Item
                     line={lineNumber}
