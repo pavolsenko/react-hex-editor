@@ -40,7 +40,7 @@ export const HexViewer: React.FC<IHexViewerProps> = (props: IHexViewerProps) => 
         <HexViewerWrapper>
             <ViewerHeader
                 fileName={props.file.name}
-                onCloseClick={() => props.onFileReset()}
+                onCloseClick={props.onFileReset}
             />
             <ContentWrapper>
                 <HexView

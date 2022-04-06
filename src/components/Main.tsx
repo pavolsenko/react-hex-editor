@@ -59,7 +59,7 @@ export const Main: React.FC<IMainProps> = (props: IMainProps) => {
                 isError={isError}
                 isLoading={isLoading}
                 file={file}
-                onFileReset={() => resetFile()}
+                onFileReset={resetFile}
             />
         );
     };

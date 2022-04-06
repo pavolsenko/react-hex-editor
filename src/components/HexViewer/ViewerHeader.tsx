@@ -23,7 +23,7 @@ interface IViewerHeaderProps {
     onCloseClick: () => void;
 }
 
-export const ViewerHeader: React.FC<IViewerHeaderProps> = (props: IViewerHeaderProps) => {
+export const ViewerHeader: React.FC<IViewerHeaderProps> = React.memo((props: IViewerHeaderProps) => {
     return (
         <HeaderWrapper>
             <IconWrapper>
@@ -38,4 +38,4 @@ export const ViewerHeader: React.FC<IViewerHeaderProps> = (props: IViewerHeaderP
             </Button>
         </HeaderWrapper>
     );
-};
+});

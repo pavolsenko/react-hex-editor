@@ -72,14 +72,14 @@ export const useFileLoader = (): IUseFileLoader => {
         reader.readAsArrayBuffer(file);
     };
 
-    const resetError = (): void => {
+    const resetError = React.useCallback((): void => {
         setIsError(false);
-    };
+    }, []);
 
-    const resetFile = (): void => {
+    const resetFile = React.useCallback((): void => {
         setFile(undefined);
         setData(new Uint8Array([]));
-    };
+    }, []);
 
     return {
         data,
