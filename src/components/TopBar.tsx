@@ -26,7 +26,7 @@ export const TopBar: React.FC<ITopBarProps> = (props: ITopBarProps) => {
                     noWrap
                     component='div'
                 >
-                    <FormattedMessage id={'React HEX Editor'} />
+                    <FormattedMessage id={'React HEX Viewer'} />
                 </Typography>
 
                 <Box sx={{flexGrow: 1}} />
