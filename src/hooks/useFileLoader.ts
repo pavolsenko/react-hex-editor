@@ -69,7 +69,12 @@ export const useFileLoader = (): IUseFileLoader => {
                 );
             }
         };
-        reader.readAsArrayBuffer(file);
+
+        if (/\.txt$/.test(file.name)) {
+            reader.readAsText(file);
+        } else {
+            reader.readAsArrayBuffer(file);
+        }
     };
 
     const resetError = React.useCallback((): void => {

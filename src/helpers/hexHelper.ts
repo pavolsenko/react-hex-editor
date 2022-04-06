@@ -19,7 +19,7 @@ export const getLineNumberHex = (lineNumber: number, length: number = 16): strin
     let line = lineNumber.toString(16).toUpperCase() + '0';
     const lineLength = line.length;
 
-    for (let i = 0; i <= length - lineLength; i++) {
+    for (let i = 0; i < length - lineLength; i++) {
         line = '0' + line;
     }
 
