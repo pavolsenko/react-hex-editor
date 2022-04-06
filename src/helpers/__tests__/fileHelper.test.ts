@@ -2,7 +2,10 @@ import {convertFileDataToArray} from '../fileHelper';
 
 describe('FileHelper', () => {
     it('should convert string file data to an array', () => {
-        expect(convertFileDataToArray('asdasda'))
-            .toEqual(new Uint8Array([97, 115, 100, 97, 115, 100, 97]));
+        const result = convertFileDataToArray('asdasda');
+        const expected = new Uint8Array([97, 115, 100, 97, 115, 100, 97]);
+
+        expect(result).toEqual(expected);
+        expect(result).toHaveLength(7);
     });
 });

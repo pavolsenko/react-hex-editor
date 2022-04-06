@@ -34,7 +34,7 @@ describe('HexHelper', () => {
 
     it('should return the 28th line number in hex with number length of 8', () => {
         const result = getLineNumberHex(28, 8);
-        const expected = '0000000180';
+        const expected = '000001C0';
 
         expect(result).toEqual(expected);
         expect(result).toHaveLength(8);
