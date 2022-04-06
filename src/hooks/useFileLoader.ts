@@ -63,11 +63,11 @@ export const useFileLoader = (): IUseFileLoader => {
         reader.onloadend = () => setIsLoading(false);
 
         reader.onload = async (event: ProgressEvent<FileReader>): Promise<void> => {
-           if (event.target?.result) {
-               setData(
-                   convertFileDataToArray(event.target.result)
-               );
-           }
+            if (event.target?.result) {
+                setData(
+                    convertFileDataToArray(event.target.result),
+                );
+            }
         };
         reader.readAsArrayBuffer(file);
     };

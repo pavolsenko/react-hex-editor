@@ -44,7 +44,7 @@ export const ByteView: React.FC<ISectionProps> = (props: ISectionProps) => {
                     onClick={props.onSelectedByteChange}
                     key={index.toString()}
                     value={String.fromCharCode(item)}
-                />
+                />,
             );
         });
 

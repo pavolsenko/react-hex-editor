@@ -29,7 +29,7 @@ export const HexView: React.FC<ISectionProps> = (props: ISectionProps) => {
             <ItemLineNumber
                 key={'line-' + lineNumber.toString()}
                 lineNumber={lineNumber}
-            />
+            />,
         );
 
         while (byteNumber < 16) {
@@ -42,7 +42,7 @@ export const HexView: React.FC<ISectionProps> = (props: ISectionProps) => {
                     onClick={props.onSelectedByteChange}
                     key={lineNumber.toString() + '-' + byteNumber.toString()}
                     value={lineString.substring(0, 2).toUpperCase()}
-                />
+                />,
             );
 
             lineString = lineString.slice(2);
@@ -64,7 +64,7 @@ export const HexView: React.FC<ISectionProps> = (props: ISectionProps) => {
 
         while (data.length > 0) {
             result.push(
-                renderLine(data.substring(0, 32), lineNumber)
+                renderLine(data.substring(0, 32), lineNumber),
             );
 
             data = data.slice(32);
