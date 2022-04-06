@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-- clone this project with `git clone git@github.com:pavolsenko/react-currency-list.git`
+- clone this project with `git clone git@github.com:pavolsenko/react-hex-editor.gitt`
 - install dependencies with `npm install`
 - to start the project run `npm start`
 - for tests run `npm test` or `npm run test:coverage`
